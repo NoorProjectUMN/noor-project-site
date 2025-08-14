@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Noor Project Submissions</title>
+    <!--
+      This simple, responsive web page allows students at the University of
+      Minnesota (UMN) to anonymously or publicly share poems, drawings and
+      stories.  The form enforces UMN‑email addresses using the HTML pattern
+      attribute (see MDN for an example of restricting corporate email
+      addresses【585979022220613†L250-L265】).  The page adapts to phones and
+      desktop screens and contains a minimal text editor and drawing canvas.
+    -->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site‑header">
+      <img src="logo.png" alt="Noor Project logo" class="logo" />
+      <h1>Noor Project</h1>
+      <p class="subtitle">
+        Share your light. Submit poems, drawings or stories from your UMN
+        email. Choose whether to publish anonymously or not.
+      </p>
+    </header>
+
+    <main class="container">
+      <form id="submissionForm" class="card">
+        <h2>Submit your work</h2>
+        <!-- Email input restricted to UMN addresses using a pattern -->
+        <div class="form‑group">
+          <label for="email">UMN Email<span class="required">*</span></label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            pattern=".+@umn\.edu"
+            placeholder="example@umn.edu"
+            title="Please provide a University of Minnesota email address"
+            required
+          />
+        </div>
+        <!-- Optional name field -->
+        <div class="form‑group">
+          <label for="name">Your name (optional)</label>
+          <input type="text" id="name" name="name" placeholder="Name or alias" />
+        </div>
+        <!-- Anonymity selection -->
+        <fieldset class="form‑group">
+          <legend>Display identity</legend>
+          <label>
+            <input type="radio" name="anonymous" value="yes" checked />
+            Remain anonymous
+          </label>
+          <label>
+            <input type="radio" name="anonymous" value="no" />
+            Display my name
+          </label>
+        </fieldset>
+        <!-- Dashboard display selection -->
+        <fieldset class="form‑group">
+          <legend>Publish on dashboard</legend>
+          <label>
+            <input type="radio" name="display" value="yes" checked />
+            Yes
+          </label>
+          <label>
+            <input type="radio" name="display" value="no" />
+            No
+          </label>
+        </fieldset>
+        <!-- Submission type chooser -->
+        <fieldset class="form‑group">
+          <legend>Submission type</legend>
+          <label>
+            <input type="radio" name="type" value="text" checked />
+            Text / Poetry
+          </label>
+          <label>
+            <input type="radio" name="type" value="drawing" />
+            Drawing
+          </label>
+        </fieldset>
+        <!-- Text editor -->
+        <div id="textContainer" class="editor‑container">
+          <label for="textEditor">Write your piece</label>
+          <div class="toolbar" id="textToolbar">
+            <button type="button" class="tool‑btn" id="boldBtn" title="Bold">
+              <strong>B</strong>
+            </button>
+            <button type="button" class="tool‑btn" id="italicBtn" title="Italic">
+              <em>I</em>
+            </button>
+            <button type="button" class="tool‑btn" id="underlineBtn" title="Underline">
+              <u>U</u>
+            </button>
+            <label class="color‑picker">
+              <input type="color" id="textColor" value="#5a372c" />
+            </label>
+          </div>
+          <div
+            id="textEditor"
+            class="text‑editor"
+            contenteditable="true"
+            placeholder="Start writing or paste your poem here..."
+          ></div>
+        </div>
+        <!-- Drawing canvas -->
+        <div id="drawingContainer" class="drawing‑container hidden">
+          <label>Draw your art</label>
+          <div class="drawing‑toolbar">
+            <label>
+              Brush color
+              <input type="color" id="drawColor" value="#5a372c" />
+            </label>
+            <label>
+              Brush size
+              <input type="range" id="brushSize" min="1" max="20" value="5" />
+            </label>
+            <button type="button" id="clearCanvas">Clear</button>
+          </div>
+          <canvas id="drawingCanvas" width="400" height="300"></canvas>
+        </div>
+        <!-- Submit button -->
+        <button type="submit" class="submit‑btn">Submit</button>
+      </form>
+
+      <!-- Dashboard for displaying approved submissions -->
+      <section id="dashboard" class="dashboard card">
+        <h2>Dashboard</h2>
+        <p class="dashboard‑subtitle">
+          Below are recent submissions that authors opted to display on the
+          dashboard. Anonymous pieces are credited accordingly.
+        </p>
+        <div id="submissionsList" class="submissions‑list"></div>
+      </section>
+    </main>
+    <footer class="site‑footer">
+      <p>
+        &copy; <span id="year"></span> Noor Project. Not a crisis line. If
+        you're in immediate danger, call 911. If you need support, call 988
+        (US) or your local helpline.
+      </p>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>

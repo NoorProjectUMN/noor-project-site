@@ -1,0 +1,245 @@
+/*
+ * Client-side functionality for the Noor Project submission site.
+ *
+ * This script handles:
+ *  - toggling between the text editor and drawing canvas when the user
+ *    changes the submission type
+ *  - basic text formatting (bold, italic, underline) using
+ *    document.execCommand
+ *  - setting the foreground colour of selected text
+ *  - drawing on a canvas with configurable brush colour and size
+ *  - storing submissions to localStorage so they persist between page loads
+ *  - rendering submissions to the dashboard when authors opted to display
+ */
+
+(() => {
+  // Helper to select elements
+  const $ = (selector) => document.querySelector(selector);
+
+  // Initialise year in footer
+  const yearSpan = $('#year');
+  if (yearSpan) {
+    yearSpan.textContent = new Date().getFullYear().toString();
+  }
+
+  // Elements
+  const form = $('#submissionForm');
+  const typeInputs = form.querySelectorAll('input[name="type"]');
+  const textContainer = $('#textContainer');
+  const drawingContainer = $('#drawingContainer');
+  const textEditor = $('#textEditor');
+  const boldBtn = $('#boldBtn');
+  const italicBtn = $('#italicBtn');
+  const underlineBtn = $('#underlineBtn');
+  const textColor = $('#textColor');
+  const drawColor = $('#drawColor');
+  const brushSize = $('#brushSize');
+  const clearCanvasBtn = $('#clearCanvas');
+  const canvas = $('#drawingCanvas');
+  const submissionsList = $('#submissionsList');
+
+  // Toggle between text and drawing containers
+  function updateType() {
+    const selectedType = form.querySelector('input[name="type"]:checked').value;
+    if (selectedType === 'text') {
+      textContainer.classList.remove('hidden');
+      drawingContainer.classList.add('hidden');
+    } else {
+      textContainer.classList.add('hidden');
+      drawingContainer.classList.remove('hidden');
+    }
+  }
+
+  typeInputs.forEach((input) => {
+    input.addEventListener('change', updateType);
+  });
+
+  // Basic rich text commands
+  function execCmd(command, value = null) {
+    document.execCommand(command, false, value);
+  }
+  boldBtn.addEventListener('click', () => execCmd('bold'));
+  italicBtn.addEventListener('click', () => execCmd('italic'));
+  underlineBtn.addEventListener('click', () => execCmd('underline'));
+  // Set selected text colour using execCommand
+  textColor.addEventListener('input', (e) => {
+    execCmd('foreColor', e.target.value);
+  });
+
+  // Canvas drawing setup
+  const ctx = canvas.getContext('2d');
+  let drawing = false;
+  // Set initial stroke properties
+  ctx.lineJoin = 'round';
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = drawColor.value;
+  ctx.lineWidth = Number(brushSize.value);
+
+  function getPos(evt) {
+    const rect = canvas.getBoundingClientRect();
+    return {
+      x: evt.clientX - rect.left,
+      y: evt.clientY - rect.top,
+    };
+  }
+
+  function startDraw(evt) {
+    drawing = true;
+    ctx.beginPath();
+    const pos = getPos(evt);
+    ctx.moveTo(pos.x, pos.y);
+  }
+
+  function draw(evt) {
+    if (!drawing) return;
+    const pos = getPos(evt);
+    ctx.lineTo(pos.x, pos.y);
+    ctx.stroke();
+  }
+
+  function endDraw() {
+    drawing = false;
+    ctx.closePath();
+  }
+
+  // Mouse events
+  canvas.addEventListener('mousedown', startDraw);
+  canvas.addEventListener('mousemove', draw);
+  canvas.addEventListener('mouseup', endDraw);
+  canvas.addEventListener('mouseleave', endDraw);
+  // Touch events for mobile
+  canvas.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    const touch = e.touches[0];
+    startDraw({ clientX: touch.clientX, clientY: touch.clientY });
+  });
+  canvas.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+    const touch = e.touches[0];
+    draw({ clientX: touch.clientX, clientY: touch.clientY });
+  });
+  canvas.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    endDraw();
+  });
+
+  // Update brush colour and size when inputs change
+  drawColor.addEventListener('input', (e) => {
+    ctx.strokeStyle = e.target.value;
+  });
+  brushSize.addEventListener('input', (e) => {
+    ctx.lineWidth = Number(e.target.value);
+  });
+  clearCanvasBtn.addEventListener('click', () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  });
+
+  // Local storage helper functions
+  function loadSubmissions() {
+    const json = localStorage.getItem('noorSubmissions');
+    if (!json) return [];
+    try {
+      return JSON.parse(json);
+    } catch {
+      return [];
+    }
+  }
+  function saveSubmissions(list) {
+    localStorage.setItem('noorSubmissions', JSON.stringify(list));
+  }
+
+  // Render submissions to the dashboard
+  function renderSubmissions() {
+    submissionsList.innerHTML = '';
+    const submissions = loadSubmissions();
+    submissions
+      .filter((s) => s.display)
+      .sort((a, b) => b.timestamp - a.timestamp)
+      .forEach((sub) => {
+        const card = document.createElement('div');
+        card.className = 'submission';
+        const meta = document.createElement('div');
+        meta.className = 'meta';
+        const date = new Date(sub.timestamp).toLocaleString();
+        const author = sub.anonymous ? 'Anonymous' : sub.name || 'Unknown';
+        meta.textContent = `${author} — ${date}`;
+        const content = document.createElement('div');
+        content.className = 'content';
+        if (sub.type === 'text') {
+          // Set as HTML (trusted from user). Could be sanitized in a real app
+          content.innerHTML = sub.content;
+        } else if (sub.type === 'drawing') {
+          const img = document.createElement('img');
+          img.src = sub.content;
+          img.alt = 'Drawing submission';
+          content.appendChild(img);
+        }
+        card.appendChild(meta);
+        card.appendChild(content);
+        submissionsList.appendChild(card);
+      });
+  }
+
+  // Form submission handler
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = $('#email').value.trim();
+    const name = $('#name').value.trim();
+    const anonymousVal = form.querySelector('input[name="anonymous"]:checked').value;
+    const displayVal = form.querySelector('input[name="display"]:checked').value;
+    const type = form.querySelector('input[name="type"]:checked').value;
+    // Basic validation: rely on HTML5 email pattern; check content not empty
+    let content;
+    if (type === 'text') {
+      content = textEditor.innerHTML.trim();
+      if (!content) {
+        alert('Please write something in the text editor before submitting.');
+        return;
+      }
+    } else {
+      // Convert canvas to data URL (PNG)
+      content = canvas.toDataURL('image/png');
+      // Also require drawing not empty (pixels). We check if canvas is blank
+      // by examining pixel data.
+      const blank = isCanvasBlank(canvas);
+      if (blank) {
+        alert('Please draw something on the canvas before submitting.');
+        return;
+      }
+    }
+    const submissions = loadSubmissions();
+    submissions.push({
+      email,
+      name,
+      anonymous: anonymousVal === 'yes',
+      display: displayVal === 'yes',
+      type,
+      content,
+      timestamp: Date.now(),
+    });
+    saveSubmissions(submissions);
+    renderSubmissions();
+    // Reset form fields after submission
+    form.reset();
+    // Reset editor & canvas
+    textEditor.innerHTML = '';
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    updateType();
+    alert('Thank you for your submission!');
+  });
+
+  // Check if canvas is blank by comparing pixel data
+  function isCanvasBlank(c) {
+    const bctx = c.getContext('2d');
+    const pixelBuffer = new Uint32Array(
+      bctx.getImageData(0, 0, c.width, c.height).data.buffer
+    );
+    return !pixelBuffer.some((color) => color !== 0);
+  }
+
+  // Render existing submissions on page load
+  document.addEventListener('DOMContentLoaded', () => {
+    renderSubmissions();
+    updateType();
+  });
+})();
