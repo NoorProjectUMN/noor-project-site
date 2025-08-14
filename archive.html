@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Noor Project Archive</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site‑header">
+      <img src="logo.png" alt="Noor Project logo" class="logo" />
+      <h1>Noor Project Archive</h1>
+      <p class="subtitle">
+        Explore the collection of poems, drawings and stories shared with
+        Noor. Anonymous pieces are credited with a randomly generated
+        username to preserve privacy.
+      </p>
+      <nav class="nav-links">
+        <a href="index.html">Submit</a>
+      </nav>
+    </header>
+    <main class="container">
+      <section class="dashboard card">
+        <h2>Public Submissions</h2>
+        <p class="dashboard‑subtitle">
+          Only submissions that authors opted to publish are visible here.
+          Those who chose to remain anonymous are displayed using a
+          pseudonym.
+        </p>
+        <div id="archiveList" class="submissions‑list"></div>
+      </section>
+    </main>
+    <footer class="site‑footer">
+      <p>
+        &copy; <span id="year"></span> Noor Project. Not a crisis line.
+        If you're in immediate danger, call 911. If you need support, call
+        988 (US) or your local helpline.
+      </p>
+    </footer>
+    <script src="archive.js"></script>
+  </body>
+</html>

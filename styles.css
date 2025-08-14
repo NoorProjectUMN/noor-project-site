@@ -280,3 +280,21 @@ footer.site‑footer {
     height: auto;
   }
 }
+
+/* Navigation links */
+.nav-links {
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+.nav-links a {
+  margin: 0 0.5rem;
+  font-weight: bold;
+  color: var(--primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.nav-links a:hover {
+  color: var(--accent);
+}

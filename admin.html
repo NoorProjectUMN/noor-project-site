@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Noor Project Admin</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site‑header">
+      <img src="logo.png" alt="Noor Project logo" class="logo" />
+      <h1>Noor Project Admin Dashboard</h1>
+      <p class="subtitle">
+        This page lists all submissions, including those not published on the
+        public archive. Anonymous entries use pseudonyms. Only administrators
+        should view this page.
+      </p>
+      <nav class="nav-links">
+        <a href="index.html">Submit</a>
+        <a href="archive.html">Archive</a>
+      </nav>
+    </header>
+    <main class="container">
+      <section class="dashboard card">
+        <h2>All Submissions</h2>
+        <p class="dashboard‑subtitle">
+          The following list includes both published and private submissions. A
+          status tag indicates whether each piece is shown on the public
+          archive.
+        </p>
+        <div id="adminList" class="submissions‑list"></div>
+      </section>
+    </main>
+    <footer class="site‑footer">
+      <p>
+        &copy; <span id="year"></span> Noor Project. Not a crisis line.
+        If you're in immediate danger, call 911. If you need support, call
+        988 (US) or your local helpline.
+      </p>
+    </footer>
+    <script src="admin.js"></script>
+  </body>
+</html>

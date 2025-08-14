@@ -13,6 +13,46 @@
  */
 
 (() => {
+  // Generate a random pseudonym for anonymous submissions. Combines
+  // descriptive adjectives and nouns with a number to make it unique.
+  function generateRandomUsername() {
+    const adjectives = [
+      'Luminous',
+      'Radiant',
+      'Soothing',
+      'Gentle',
+      'Serene',
+      'Mystic',
+      'Whispering',
+      'Eternal',
+      'Sunny',
+      'Dancing',
+      'Blooming',
+      'Dreaming',
+      'Hushed',
+      'Wandering',
+    ];
+    const nouns = [
+      'Willow',
+      'Raven',
+      'River',
+      'Lotus',
+      'Phoenix',
+      'Aurora',
+      'Meadow',
+      'Storm',
+      'Sage',
+      'Echo',
+      'Lantern',
+      'Breeze',
+      'Crescent',
+      'Harbor',
+    ];
+    const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
+    const noun = nouns[Math.floor(Math.random() * nouns.length)];
+    const number = Math.floor(Math.random() * 10000);
+    return `${adj}${noun}${number}`;
+  }
   // Helper to select elements
   const $ = (selector) => document.querySelector(selector);
 
@@ -161,7 +201,12 @@
         const meta = document.createElement('div');
         meta.className = 'meta';
         const date = new Date(sub.timestamp).toLocaleString();
-        const author = sub.anonymous ? 'Anonymous' : sub.name || 'Unknown';
+        // Determine how to display the author. If the submission is
+        // anonymous, show the generated pseudonym. Otherwise show the
+        // supplied name (falling back to Unknown if blank).
+        const author = sub.anonymous
+          ? sub.pseudonym || 'Anonymous'
+          : sub.name || 'Unknown';
         meta.textContent = `${author} — ${date}`;
         const content = document.createElement('div');
         content.className = 'content';
@@ -208,9 +253,14 @@
       }
     }
     const submissions = loadSubmissions();
+    // Generate a pseudonym if the user chose to remain anonymous. This ensures
+    // anonymous submissions are still identifiable to the admin without
+    // revealing personal details.
+    const pseudonym = anonymousVal === 'yes' ? generateRandomUsername() : '';
     submissions.push({
       email,
       name,
+      pseudonym,
       anonymous: anonymousVal === 'yes',
       display: displayVal === 'yes',
       type,
