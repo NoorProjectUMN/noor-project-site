@@ -16,7 +16,11 @@
   // If you set FETCH_ENDPOINT to a valid URL returning a JSON array of
   // submissions, the admin page will load entries from the server. Leave
   // blank to use localStorage only. See README for server setup.
-  const FETCH_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxXgoLi99KCf9rH8Ng1aiihMfEzw1ct3GHFQcuMPpP67SLtlR5iVajpUHo4puzlKFI8/exec';
+  // Endpoint for loading all submissions from the Google Apps Script backend.  
+  // This URL should point to the deployed Apps Script web app without any query
+  // parameters. The admin dashboard will fetch both published and unpublished
+  // entries from this endpoint.
+  const FETCH_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyhbQGA_1K8Qu6D_0id8VCaxAdG5yq_4-lsVVrZRbtzv1Wlq6uGKHdMMJDM_3ROFcTQ/exec';
 
   function loadSubmissions() {
     const json = localStorage.getItem('noorSubmissions');
