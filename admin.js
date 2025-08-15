@@ -12,6 +12,12 @@
   const $ = (selector) => document.querySelector(selector);
   const list = $('#adminList');
 
+  // === Configuration ===
+  // If you set FETCH_ENDPOINT to a valid URL returning a JSON array of
+  // submissions, the admin page will load entries from the server. Leave
+  // blank to use localStorage only. See README for server setup.
+  const FETCH_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxXgoLi99KCf9rH8Ng1aiihMfEzw1ct3GHFQcuMPpP67SLtlR5iVajpUHo4puzlKFI8/exec';
+
   function loadSubmissions() {
     const json = localStorage.getItem('noorSubmissions');
     if (!json) return [];
@@ -22,10 +28,25 @@
     }
   }
 
-  function renderAdmin() {
+  async function fetchSubmissions() {
+    if (FETCH_ENDPOINT) {
+      try {
+        const res = await fetch(FETCH_ENDPOINT);
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          return data;
+        }
+      } catch (err) {
+        console.error('Failed to fetch submissions from server', err);
+      }
+    }
+    return loadSubmissions();
+  }
+
+  async function renderAdmin() {
     if (!list) return;
     list.innerHTML = '';
-    const submissions = loadSubmissions();
+    const submissions = await fetchSubmissions();
     submissions
       .sort((a, b) => b.timestamp - a.timestamp)
       .forEach((sub) => {
