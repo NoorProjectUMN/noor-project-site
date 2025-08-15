@@ -20,7 +20,7 @@
   // client‑side (localStorage only). See README or project docs for
   // instructions on creating a Google Apps Script that saves data to
   // Google Sheets.
-  const SUBMIT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxXgoLi99KCf9rH8Ng1aiihMfEzw1ct3GHFQcuMPpP67SLtlR5iVajpUHo4puzlKFI8/exec';
+  const SUBMIT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyhbQGA_1K8Qu6D_0id8VCaxAdG5yq_4-lsVVrZRbtzv1Wlq6uGKHdMMJDM_3ROFcTQ/exec';
   // Generate a random pseudonym for anonymous submissions. Combines
   // descriptive adjectives and nouns with a number to make it unique.
   function generateRandomUsername() {
