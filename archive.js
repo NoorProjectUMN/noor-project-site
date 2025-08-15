@@ -19,7 +19,11 @@
   // submission object should include the same fields used in localStorage
   // (email, name, pseudonym, anonymous, display, type, content, timestamp).
   // Leave this blank to use localStorage only. See README for server setup.
-  const FETCH_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxXgoLi99KCf9rH8Ng1aiihMfEzw1ct3GHFQcuMPpP67SLtlR5iVajpUHo4puzlKFI8/exec?published=true';
+  // Endpoint for loading only published submissions from the Google Apps Script
+  // backend. We append ?published=true so that the server filters out
+  // unpublished entries.  
+  const FETCH_ENDPOINT =
+    'https://script.google.com/macros/s/AKfycbyhbQGA_1K8Qu6D_0id8VCaxAdG5yq_4-lsVVrZRbtzv1Wlq6uGKHdMMJDM_3ROFcTQ/exec?published=true';
 
   // Load all submissions from localStorage. Shared with the main site.
   function loadSubmissions() {
