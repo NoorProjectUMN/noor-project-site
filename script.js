@@ -13,6 +13,14 @@
  */
 
 (() => {
+  // === Configuration ===
+  // If you set SUBMIT_ENDPOINT to a valid URL (e.g. the URL of your Google
+  // Apps Script web app), the site will send each submission to that
+  // endpoint using a POST request. Leaving this blank keeps all data
+  // client‑side (localStorage only). See README or project docs for
+  // instructions on creating a Google Apps Script that saves data to
+  // Google Sheets.
+  const SUBMIT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxXgoLi99KCf9rH8Ng1aiihMfEzw1ct3GHFQcuMPpP67SLtlR5iVajpUHo4puzlKFI8/exec';
   // Generate a random pseudonym for anonymous submissions. Combines
   // descriptive adjectives and nouns with a number to make it unique.
   function generateRandomUsername() {
@@ -268,6 +276,29 @@
       timestamp: Date.now(),
     });
     saveSubmissions(submissions);
+
+    // If an endpoint is configured, send the submission to the server.
+    if (SUBMIT_ENDPOINT) {
+      const payload = {
+        email,
+        name,
+        pseudonym,
+        anonymous: anonymousVal === 'yes',
+        display: displayVal === 'yes',
+        type,
+        content,
+        timestamp: Date.now(),
+      };
+      // Fire and forget; we do not await the response to avoid blocking the UI.
+      fetch(SUBMIT_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        // Use no‑cors mode to suppress CORS errors if the endpoint does not
+        // return proper CORS headers. The server will still receive the data.
+        mode: 'no-cors',
+      }).catch((err) => console.error('Error sending submission to server', err));
+    }
     renderSubmissions();
     // Reset form fields after submission
     form.reset();
