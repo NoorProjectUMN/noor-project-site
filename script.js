@@ -20,7 +20,16 @@
   // client‑side (localStorage only). See README or project docs for
   // instructions on creating a Google Apps Script that saves data to
   // Google Sheets.
-  const SUBMIT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyhbQGA_1K8Qu6D_0id8VCaxAdG5yq_4-lsVVrZRbtzv1Wlq6uGKHdMMJDM_3ROFcTQ/exec';
+  // Updated endpoint after deploying the latest Apps Script web app. This
+  // value points to version 3 of the Noor Project backend hosted on
+  // Google Apps Script. If you redeploy your script again in the future,
+  // remember to update this constant accordingly.
+  // Updated endpoint after redeploying the Apps Script web app.  This URL
+  // points to version 4 of the backend (created Aug 16 2025) which fixes
+  // sheet access and supports cross-device persistence.  If you redeploy
+  // your script again later, remember to update this constant.
+  const SUBMIT_ENDPOINT =
+    'https://script.google.com/macros/s/AKfycbwpB87Ky-hzkvFTsxYN5IJS8tba8UmzujoeUI-0qbmXTFezDDqMSLhkbgLqzRGOZRfQ/exec';
   // Generate a random pseudonym for anonymous submissions. Combines
   // descriptive adjectives and nouns with a number to make it unique.
   function generateRandomUsername() {
