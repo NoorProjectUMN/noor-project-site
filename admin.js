@@ -20,7 +20,14 @@
   // This URL should point to the deployed Apps Script web app without any query
   // parameters. The admin dashboard will fetch both published and unpublished
   // entries from this endpoint.
-  const FETCH_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyhbQGA_1K8Qu6D_0id8VCaxAdG5yq_4-lsVVrZRbtzv1Wlq6uGKHdMMJDM_3ROFcTQ/exec';
+  // Updated endpoint for retrieving all submissions (published and unpublished)
+  // from the latest Apps Script deployment. This URL must not include
+  // query parameters so that the admin dashboard can see every entry.
+  // Updated endpoint for retrieving all submissions (published and
+  // unpublished) from the latest Apps Script deployment (version 4,
+  // Aug 16 2025).  If you redeploy your script again, update this URL.
+  const FETCH_ENDPOINT =
+    'https://script.google.com/macros/s/AKfycbwpB87Ky-hzkvFTsxYN5IJS8tba8UmzujoeUI-0qbmXTFezDDqMSLhkbgLqzRGOZRfQ/exec';
 
   function loadSubmissions() {
     const json = localStorage.getItem('noorSubmissions');
