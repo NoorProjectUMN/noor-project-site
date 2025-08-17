@@ -22,8 +22,15 @@
   // Endpoint for loading only published submissions from the Google Apps Script
   // backend. We append ?published=true so that the server filters out
   // unpublished entries.  
+  // Updated fetch endpoint for loading published submissions from the
+  // latest Apps Script deployment. The `?published=true` query tells the
+  // server to return only those entries marked for public display.
+  // Updated fetch endpoint for loading published submissions from the
+  // latest Apps Script deployment.  This points to version 4 of the
+  // backend (Aug 16 2025) and filters by `?published=true` so the
+  // archive shows only entries marked for public display.
   const FETCH_ENDPOINT =
-    'https://script.google.com/macros/s/AKfycbyhbQGA_1K8Qu6D_0id8VCaxAdG5yq_4-lsVVrZRbtzv1Wlq6uGKHdMMJDM_3ROFcTQ/exec?published=true';
+    'https://script.google.com/macros/s/AKfycbwpB87Ky-hzkvFTsxYN5IJS8tba8UmzujoeUI-0qbmXTFezDDqMSLhkbgLqzRGOZRfQ/exec?published=true';
 
   // Load all submissions from localStorage. Shared with the main site.
   function loadSubmissions() {
