@@ -31,9 +31,16 @@
 // We split the URL into parts to prevent editors from wrapping the
 // string and introducing unwanted line breaks.  If you redeploy
 // your Apps Script again, update the ID below accordingly.
+// Updated endpoint for retrieving all submissions from the latest
+// Apps Script deployment (version 4, deployed Aug 16 2025).  We split
+// the URL into parts to avoid extremely long lines that editors might
+// wrap.  If you redeploy your Apps Script again, update the ID below.
 const FETCH_ENDPOINT =
     'https://script.google.com/macros/s/' +
-    'AKfcybyt40ZjrousE-nwapWFk0anNMCoVh1byNz5cbFpS2vNR64TJIDDOn4_h2idv9TADsq' +
+    // Noor Project backend v4 (Aug 16 2025). Do not append any
+    // query parameters here so the admin dashboard can fetch both
+    // published and unpublished entries.
+    'AKfycbwpB87Ky-hzkvFTsxYN5IJS8tba8UmzujoeUI-0qbmXTFezDDqMSLhkbgLqzRGOZRfQ' +
     '/exec';
 
   function loadSubmissions() {
