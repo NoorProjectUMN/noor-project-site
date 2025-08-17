@@ -36,7 +36,7 @@
     'https://script.google.com/macros/s/' +
     // Noor Project backend v4 (deployed Aug 16 2025). Always include the
     // trailing `/exec` so the POST request is directed correctly.
-    'AKfycbwpB87Ky-hzkvFTsxYN5IJS8tba8UmzujoeUI-0qbmXTFezDDqMSLhkbgLqzRGOZRfQ/exec';
+    'AKfycbwpB87Ky-hzkvFTsxYN5lJS8tba8UmzujoeUI-0qbmXTFezDDqMSLhkbgLqzRGOZRfQ/exec';
   // Generate a random pseudonym for anonymous submissions. Combines
   // descriptive adjectives and nouns with a number to make it unique.
   function generateRandomUsername() {
