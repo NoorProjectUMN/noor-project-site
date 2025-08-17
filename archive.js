@@ -29,8 +29,15 @@
   // latest Apps Script deployment.  This points to version 4 of the
   // backend (Aug 16 2025) and filters by `?published=true` so the
   // archive shows only entries marked for public display.
-  const FETCH_ENDPOINT =
-    'https://script.google.com/macros/s/AKfycbwpB87Ky-hzkvFTsxYN5IJS8tba8UmzujoeUI-0qbmXTFezDDqMSLhkbgLqzRGOZRfQ/exec?published=true';
+// Updated endpoint for loading published submissions from the latest
+// Apps Script deployment (Aug 16 2025).  The `?published=true` query
+// tells the server to return only those entries marked for public
+// display.  We split the URL across concatenated strings to avoid
+// overly long lines when editing on GitHub.
+const FETCH_ENDPOINT =
+    'https://script.google.com/macros/s/' +
+    'AKfcybyt40ZjrousE-nwapWFk0anNMCoVh1byNz5cbFpS2vNR64TJIDDOn4_h2idv9TADsq' +
+    '/exec?published=true';
 
   // Load all submissions from localStorage. Shared with the main site.
   function loadSubmissions() {
