@@ -33,10 +33,9 @@
   // editor might wrap incorrectly.  If you redeploy your Apps Script
   // again in the future, update the ID below accordingly.
   const SUBMIT_ENDPOINT =
-    'https://script.google.com/macros/s/' +
-    // Noor Project backend v4 (deployed Aug 16 2025). Always include the
-    // trailing `/exec` so the POST request is directed correctly.
-    'AKfycbwpB87Ky-hzkvFTsxYN5lJS8tba8UmzujoeUI-0qbmXTFezDDqMSLhkbgLqzRGOZRfQ/exec';
+    'https://script.google.com/macros/s/AKfycbwpB87Ky-hzkvFTsxYN5lJS8tba8UmzujoeUI-0qbmXTFezDDqMSLhkbgLqzRGOZRfQ/exec'
+    const FETCH_ENDPOINT = SUBMIT_ENDPOINT;
+const FETCH_PUBLISHED_ENDPOINT = SUBMIT_ENDPOINT + "?published=true";
   // Generate a random pseudonym for anonymous submissions. Combines
   // descriptive adjectives and nouns with a number to make it unique.
   function generateRandomUsername() {
