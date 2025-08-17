@@ -39,12 +39,9 @@
 // `?published=true` query tells the server to return only entries
 // marked for public display.  We split the URL into parts to avoid
 // extremely long lines and ensure editors don't break the string.
-const FETCH_ENDPOINT =
-    'https://script.google.com/macros/s/' +
-    // Noor Project backend v4 (Aug 16 2025). Include `?published=true` so
-    // only published entries are returned.
-    'AKfycbwpB87Ky-hzkvFTsxYN5IJS8tba8UmzujoeUI-0qbmXTFezDDqMSLhkbgLqzRGOZRfQ' +
-    '/exec?published=true';
+const SUBMIT_ENDPOINT = "https://script.google.com/macros/s/AKfycbwpB87Ky-hzkvFTsxYN5lJS8tba8UmzujoeUI-0qbmXTFezDDqMSLhkbgLqzRGOZRfQ/exec";
+const FETCH_ENDPOINT = SUBMIT_ENDPOINT;
+const FETCH_PUBLISHED_ENDPOINT = SUBMIT_ENDPOINT + "?published=true";
 
   // Load all submissions from localStorage. Shared with the main site.
   function loadSubmissions() {
