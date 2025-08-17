@@ -26,8 +26,15 @@
   // Updated endpoint for retrieving all submissions (published and
   // unpublished) from the latest Apps Script deployment (version 4,
   // Aug 16 2025).  If you redeploy your script again, update this URL.
-  const FETCH_ENDPOINT =
-    'https://script.google.com/macros/s/AKfycbwpB87Ky-hzkvFTsxYN5IJS8tba8UmzujoeUI-0qbmXTFezDDqMSLhkbgLqzRGOZRfQ/exec';
+// Updated endpoint for retrieving all submissions (published and
+// unpublished) from the latest Apps Script deployment (Aug 16 2025).
+// We split the URL into parts to prevent editors from wrapping the
+// string and introducing unwanted line breaks.  If you redeploy
+// your Apps Script again, update the ID below accordingly.
+const FETCH_ENDPOINT =
+    'https://script.google.com/macros/s/' +
+    'AKfcybyt40ZjrousE-nwapWFk0anNMCoVh1byNz5cbFpS2vNR64TJIDDOn4_h2idv9TADsq' +
+    '/exec';
 
   function loadSubmissions() {
     const json = localStorage.getItem('noorSubmissions');
