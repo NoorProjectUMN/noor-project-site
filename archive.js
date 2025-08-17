@@ -34,9 +34,16 @@
 // tells the server to return only those entries marked for public
 // display.  We split the URL across concatenated strings to avoid
 // overly long lines when editing on GitHub.
+// Updated endpoint for loading published submissions from the latest
+// Apps Script deployment (version 4, deployed Aug 16 2025).  The
+// `?published=true` query tells the server to return only entries
+// marked for public display.  We split the URL into parts to avoid
+// extremely long lines and ensure editors don't break the string.
 const FETCH_ENDPOINT =
     'https://script.google.com/macros/s/' +
-    'AKfcybyt40ZjrousE-nwapWFk0anNMCoVh1byNz5cbFpS2vNR64TJIDDOn4_h2idv9TADsq' +
+    // Noor Project backend v4 (Aug 16 2025). Include `?published=true` so
+    // only published entries are returned.
+    'AKfycbwpB87Ky-hzkvFTsxYN5IJS8tba8UmzujoeUI-0qbmXTFezDDqMSLhkbgLqzRGOZRfQ' +
     '/exec?published=true';
 
   // Load all submissions from localStorage. Shared with the main site.
