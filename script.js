@@ -28,8 +28,15 @@
   // points to version 4 of the backend (created Aug 16 2025) which fixes
   // sheet access and supports cross-device persistence.  If you redeploy
   // your script again later, remember to update this constant.
+  // Updated endpoint after the latest Apps Script deployment (Aug 16 2025).
+  // We split the URL into parts to avoid extremely long lines that GitHub's
+  // editor might wrap incorrectly.  If you redeploy your Apps Script
+  // again in the future, update the ID below accordingly.
   const SUBMIT_ENDPOINT =
-    'https://script.google.com/macros/s/AKfycbwpB87Ky-hzkvFTsxYN5IJS8tba8UmzujoeUI-0qbmXTFezDDqMSLhkbgLqzRGOZRfQ/exec';
+    'https://script.google.com/macros/s/' +
+    // Noor Project backend v4 (deployed Aug 16 2025). Always include the
+    // trailing `/exec` so the POST request is directed correctly.
+    'AKfycbwpB87Ky-hzkvFTsxYN5IJS8tba8UmzujoeUI-0qbmXTFezDDqMSLhkbgLqzRGOZRfQ/exec';
   // Generate a random pseudonym for anonymous submissions. Combines
   // descriptive adjectives and nouns with a number to make it unique.
   function generateRandomUsername() {
