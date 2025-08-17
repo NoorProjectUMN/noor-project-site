@@ -36,12 +36,10 @@
 // the URL into parts to avoid extremely long lines that editors might
 // wrap.  If you redeploy your Apps Script again, update the ID below.
 const FETCH_ENDPOINT =
-    'https://script.google.com/macros/s/' +
-    // Noor Project backend v4 (Aug 16 2025). Do not append any
-    // query parameters here so the admin dashboard can fetch both
-    // published and unpublished entries.
-    'AKfycbwpB87Ky-hzkvFTsxYN5IJS8tba8UmzujoeUI-0qbmXTFezDDqMSLhkbgLqzRGOZRfQ' +
-    '/exec';
+   const SUBMIT_ENDPOINT = "https://script.google.com/macros/s/AKfycbwpB87Ky-hzkvFTsxYN5lJS8tba8UmzujoeUI-0qbmXTFezDDqMSLhkbgLqzRGOZRfQ/exec";
+const FETCH_ENDPOINT = SUBMIT_ENDPOINT;
+const FETCH_PUBLISHED_ENDPOINT = SUBMIT_ENDPOINT + "?published=true";
+    
 
   function loadSubmissions() {
     const json = localStorage.getItem('noorSubmissions');
